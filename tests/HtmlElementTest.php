@@ -7,6 +7,32 @@ use App\HtmlElement;
 class HtmlElementTest extends TestCase
 {
     /** @test */
+    function it_checks_if_an_element_is_void_or_not()
+    {
+        $this->assertFalse((new HtmlElement('p'))->isVoid());
+
+        $this->assertTrue((new HtmlElement('img'))->isVoid());
+    }
+
+    /** @test */
+    function it_opens_a_tag()
+    {
+        $this->assertSame('<p>', (new HtmlElement('p'))->open());
+    }
+
+    /** @test */
+    function it_closes_a_tag()
+    {
+        $this->assertSame('</p>', (new HtmlElement('p'))->close());
+    }
+
+    /** @test */
+    function it_generates_escaped_content()
+    {
+        $this->assertSame(htmlentities('"Contenido escapado"', ENT_QUOTES, 'UTF-8'), (new HtmlElement('p', [], '"Contenido escapado"'))->content());
+    }
+    
+    /** @test */
     function it_generates_a_paragraph_with_content()
     {
         $element = new HtmlElement('p', [],'Este es el contenido');

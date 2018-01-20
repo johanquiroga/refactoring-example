@@ -4,6 +4,8 @@ require '../vendor/autoload.php';
 
 $element = new \App\HtmlElement('p', [],'Este es el contenido');
 
+echo $element->open().'Cualquier contenido'.$element->close();
+
 echo htmlentities($element->render(), ENT_QUOTES, 'UTF-8');
 
 echo '<br><br>';
