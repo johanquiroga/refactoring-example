@@ -44,23 +44,36 @@ class HtmlElement
     public function open()
     {
         if (! empty($this->attributes)) {
-
-            $htmlAttributes = '';
-            foreach ($this->attributes as $attribute => $value) {
-                if (is_numeric($attribute)) {
-                    $htmlAttributes .= ' '.$value;
-                } else {
-                    $htmlAttributes .= ' '.$attribute.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8').'"'; // name="value"
-                }
-            }
-            // Abrir la etiqueta con atributos
-            $result = "<{$this->name}{$htmlAttributes}>";
+            $result = "<{$this->name}{$this->attributes()}>";
         } else {
-            // Abrir la etiqueta sin atributos
             $result = "<{$this->name}>";
         }
 
         return $result;
+    }
+
+    public function attributes()
+    {
+        $htmlAttributes = '';
+
+        foreach ($this->attributes as $attribute => $value) {
+            $htmlAttributes .= $this->renderAttribute($attribute, $value);
+        }
+
+        return $htmlAttributes;
+    }
+
+    protected function renderAttribute($attribute, $value)
+    {
+        $htmlAttribute = '';
+
+        if (is_numeric($attribute)) {
+            $htmlAttribute .= ' '.$value;
+        } else {
+            $htmlAttribute .= ' '.$attribute.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8').'"'; // name="value"
+        }
+
+        return $htmlAttribute;
     }
 
     public function isVoid()

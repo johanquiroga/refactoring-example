@@ -31,7 +31,15 @@ class HtmlElementTest extends TestCase
     {
         $this->assertSame(htmlentities('"Contenido escapado"', ENT_QUOTES, 'UTF-8'), (new HtmlElement('p', [], '"Contenido escapado"'))->content());
     }
-    
+
+    /** @test */
+    function it_generates_attributes()
+    {
+        $element = new HtmlElement('span', ['class' => 'a_span', 'id' => 'the_span']);
+
+        $this->assertSame(' class="a_span" id="the_span"', $element->attributes());
+    }
+
     /** @test */
     function it_generates_a_paragraph_with_content()
     {
