@@ -41,6 +41,14 @@ class HtmlElementTest extends TestCase
     }
 
     /** @test */
+    function it_checks_if_element_has_attributes()
+    {
+        $this->assertFalse((new HtmlElement('p'))->hasAttributes());
+
+        $this->assertTrue((new HtmlElement('p', ['class' => 'paragraph']))->hasAttributes());
+    }
+
+    /** @test */
     function it_generates_a_paragraph_with_content()
     {
         $element = new HtmlElement('p', [],'Este es el contenido');
